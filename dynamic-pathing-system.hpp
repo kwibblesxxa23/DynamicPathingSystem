@@ -29,13 +29,41 @@ namespace DynamicPathingSystem {
          * @param y y pose
          * @param heading heading
          * @param forwards forwards or back bool initialized in path file as a 1 or a 0
+         * @param intake intake?
+         * @param mogoMech mogo mech?
+         * @param doinker doinker?
+         * @param redirect redirect?
          */
-        Pose(double xGoal, double y, double heading, bool forwards);
+        Pose(double xGoal, double y, double heading, bool forwards, int intake, bool mogoMech, bool doinker, bool redirect);
     
         double xGoal;
         double y;
         double heading;
         bool forwards;
+        int intake;
+        bool mogoMech;
+        bool doinker;
+        bool redirect;
+    };
+
+    class ActionItems {
+        public:
+        /**
+         * @brief Construct a new Pose object
+         *
+         * @param intake intake
+         * @param topIntake other intake
+         * @param mogoMech mogo mech
+         * @param doinker doinker
+         * @param redirect redirect
+         */
+         ActionItems(pros::Motor intake, pros::Motor topIntake, pros::adi::DigitalOut mogoMech, pros::adi::DigitalOut doinker, pros::adi::DigitalOut redirect);
+    
+         pros::Motor intake;
+         pros::Motor topIntake;
+         pros::adi::DigitalOut mogoMech;
+         pros::adi::DigitalOut doinker;
+         pros::adi::DigitalOut redirect;
     };
 
 class Pathing {
@@ -75,7 +103,29 @@ class Pathing {
      * }
      * @endcode
      */
-    void DynamicPathingSystemRun(const std::string& path, lemlib::Chassis& chassis, float rpm, float wheelDiameter);
+    void DynamicPathingSystemRun(const std::string& path, lemlib::Chassis& chassis, float rpm, float wheelDiameter, ActionItems& actionItems);
+
+    public:
+    /**
+     * @brief make the function that actually drives your auton
+     *
+     * @param path file path for the path
+     * @param chassis the bot to drive
+     *
+     * @b Example
+     * @code {.cpp}
+     * // create the DynamicPathingSystem function
+     * std::string path = "path.txt";
+     * lemlib::Chassis chassis(drivetrain, // drivetrain settings
+     *                  lateral_controller, // lateral PID settings
+     *                  angular_controller, // angular PID settings
+     *                  sensors // odometry sensors
+     * );
+     * void DynamicPathingSystem(string path, lemlib::Chassis chassis){
+     * }
+     * @endcode
+     */
+    void RunActions(ActionItems& actionItems, int intake, bool mogoMech, bool doinker, bool redirect);
 };
 
 } // end namespace
