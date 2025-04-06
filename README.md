@@ -1,5 +1,5 @@
 # The Dynamic Pathing System
-a dynamic pathing system for making autonomous functions using lemlib easyer. type your auton in a text file and have the bot do the rest. it also has support for actions during your auton such as intakes or piston functions<br>
+a dynamic pathing system for making autonomous functions using lemlib easier. type your auton in a text file and have the bot do the rest. it also has support for actions during your auton such as intakes or piston functions<br>
 
 # Includes
 #include "dynamic-pathing-system.hpp"<br>
